@@ -4,7 +4,9 @@ set -o nounset
 
 # global vars
 CLRK8S_OS=${CLRK8S_OS:-""}
+CLRK8S_OS="34080"
 CLR_VER=${CLRK8S_CLR_VER:-""}
+CLR_VER="34080"
 HIGH_POD_COUNT=${HIGH_POD_COUNT:-""}
 
 # set no proxy
@@ -183,7 +185,10 @@ function init() {
 
 if [[ -n "${CLRK8S_OS}" ]]; then
 	# shellcheck disable=SC1090
-	source "$(dirname "$0")/setup_system_${CLRK8S_OS}.sh"
+	extra_setup="$(dirname "$0")/setup_system_${CLRK8S_OS}.sh"
+	if [ -f ${extra_setup} ]; then
+	    source "${extra_setup}"
+    fi
 fi
 
 echo "Init..."
